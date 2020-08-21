@@ -1,0 +1,25 @@
+﻿5 Step setup:
+
+1. Download nuget package and install.
+
+2. Add: [assembly: log4net.Config.XmlConfigurator(Watch = true)] > in your setup file (ONCE PER APPLICATION!)
+
+3. Add: private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+|| Add: rivate static readonly log4net.ILog log = LogHelper.GetLogger(); > limited to ONCE per class. Doesnt have to be more than once.
+
+4. Create config section. :
+   <configSections>
+    <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net"/>
+  </configSections>
+  
+  Then add the root section. To add appenders.
+  <root>
+      <level value="FATAL" />
+      <appender-ref ref="ConsoleAppender" />
+      <!--<appender-ref ref="FileAppender" />
+      <appender-ref ref="RollingFileAppender" />
+      <appender-ref ref="AdoNetAppender" />-->
+    </root>
+
+5. Last: add the log(type) > log.Debug("Developer: Tutorial was run"); || log.Fatal("This is a fatal error in the process: ");
+    Advanced: add dynamic propertie(s) > log4net.GlobalContext.Properties["counter"] = j;
